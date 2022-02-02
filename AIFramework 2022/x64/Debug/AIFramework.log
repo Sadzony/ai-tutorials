@@ -1,0 +1,13 @@
+﻿  AIManager.cpp
+C:\Users\s011308k\Documents\GitHub\ai-tutorials\ai-tutorials\AIFramework 2022\AIManager.cpp(89,27): warning C4456: declaration of 'wp' hides previous local declaration
+C:\Users\s011308k\Documents\GitHub\ai-tutorials\ai-tutorials\AIFramework 2022\AIManager.cpp(85,15): message : see declaration of 'wp'
+  CollisionHelper.cpp
+  DrawableGameObject.cpp
+C:\Users\s011308k\Documents\GitHub\ai-tutorials\ai-tutorials\AIFramework 2022\DrawableGameObject.cpp(172,39): warning C4100: 'deltaTime': unreferenced formal parameter
+  PickupItem.cpp
+  Vehicle.cpp
+  Waypoint.cpp
+  WaypointManager.cpp
+  main.cpp
+  Generating Code...
+  AIFramework.vcxproj -> C:\Users\s011308k\Documents\GitHub\ai-tutorials\ai-tutorials\AIFramework 2022\x64\Debug\AIFramework.exe

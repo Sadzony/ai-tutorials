@@ -5,6 +5,7 @@
 #include "Waypoint.h"
 #include "main.h"
 #include "constants.h"
+#include <string>
 
 AIManager::AIManager()
 {
@@ -37,7 +38,7 @@ HRESULT AIManager::initialise(ID3D11Device* pd3dDevice)
     float yPos = 300;
 
     m_pCar = new Vehicle();
-    HRESULT hr = m_pCar->initMesh(pd3dDevice, carColour::redCar);
+    HRESULT hr = m_pCar->initMesh(pd3dDevice, carColour::blueCar);
     m_pCar->setVehiclePosition(Vector2D(xPos, yPos));
     if (FAILED(hr))
         return hr;
@@ -81,7 +82,6 @@ void AIManager::update(const float fDeltaTime)
     }
 
 	// draw the waypoints nearest to the car
-	/*
     Waypoint* wp = m_waypointManager.getNearestWaypoint(m_pCar->getPosition());
 	if (wp != nullptr)
 	{
@@ -91,7 +91,7 @@ void AIManager::update(const float fDeltaTime)
 			AddItemToDrawList(wp);
 		}
 	}
-    */
+    
 
     // update and draw the car (and check for pickup collisions)
 	if (m_pCar != nullptr)
@@ -108,7 +108,8 @@ void AIManager::mouseUp(int x, int y)
 	Waypoint* wp = m_waypointManager.getNearestWaypoint(Vector2D(x, y));
 	if (wp == nullptr)
 		return;
-
+    Vector2D carToWP = wp->getPosition() - m_pCar->getPosition();
+    OutputDebugStringA(("Distance to travel: " + to_string(carToWP.Length()) + "\n").c_str());
     // steering mode
     m_pCar->setPositionTo(wp->getPosition());
 }
@@ -153,6 +154,14 @@ void AIManager::keyDown(WPARAM param)
         case key_a:
         {
             OutputDebugStringA("a Down \n");
+            break;
+        }
+        case VK_SPACE:
+        {
+            Waypoint* wp = m_waypointManager.getNearestWaypoint(Vector2D(0, 0)); //create a new waypoint at 0,0 (centre)
+            if (wp == nullptr)
+                return;
+            m_pCar->setPositionTo(wp->getPosition()); //move car to waypoint
             break;
         }
 		case key_s:
@@ -245,7 +254,7 @@ bool AIManager::checkForCollisions()
     // does the car bounding sphere collide with the pickup bounding sphere?
     if (boundingSphereCar.Intersects(boundingSpherePU))
     {
-        OutputDebugStringA("A collision has occurred!\n");
+        OutputDebugStringA("Man has been picked up\n");
         m_pickups[0]->hasCollided();
         setRandomPickupPosition(m_pickups[0]);
 

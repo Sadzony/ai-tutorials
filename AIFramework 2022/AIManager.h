@@ -1,7 +1,6 @@
 #pragma once
 
 #include "WaypointManager.h"
-
 using namespace std;
 
 class Vehicle;

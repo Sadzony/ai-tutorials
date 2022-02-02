@@ -1,6 +1,8 @@
 #include "Vehicle.h"
 
+#define SLOW_MAX_SPEED 100
 #define NORMAL_MAX_SPEED 200
+#define BOOSTED_MAX_SPEED 300
 
 HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, carColour colour)
 {
@@ -17,7 +19,7 @@ HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, carColour colour)
 
 	HRESULT hr = DrawableGameObject::initMesh(pd3dDevice);
 
-	m_maxSpeed = NORMAL_MAX_SPEED;
+	setMaxSpeed(BOOSTED_MAX_SPEED);
 	m_currentSpeed = m_maxSpeed;
 	setVehiclePosition(Vector2D(0, 0));
 
