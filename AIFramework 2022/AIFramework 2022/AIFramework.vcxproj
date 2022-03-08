@@ -364,6 +364,7 @@
     <ClCompile Include="Collidable.cpp" />
     <ClCompile Include="CollisionHelper.cpp" />
     <ClCompile Include="DDSTextureLoader.cpp" />
+    <ClCompile Include="Debug.cpp" />
     <ClCompile Include="DrawableGameObject.cpp" />
     <ClCompile Include="main.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -380,6 +381,7 @@
     <ClInclude Include="CollisionHelper.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="DDSTextureLoader.h" />
+    <ClInclude Include="Debug.h" />
     <ClInclude Include="DrawableGameObject.h" />
     <ClInclude Include="main.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

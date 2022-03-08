@@ -37,7 +37,7 @@ HRESULT AIManager::initialise(ID3D11Device* pd3dDevice)
     float yPos = 300;
 
     m_pCar = new Vehicle();
-    HRESULT hr = m_pCar->initMesh(pd3dDevice, carColour::blueCar);
+    HRESULT hr = m_pCar->initMesh(pd3dDevice, carColour::redCar);
     m_pCar->setVehiclePosition(Vector2D(xPos, yPos));
     if (FAILED(hr))
         return hr;
@@ -163,6 +163,9 @@ void AIManager::keyDown(WPARAM param)
 		{
             break;
         }
+        case VK_SPACE:
+
+            break;
         // etc
         default:
             break;
@@ -245,7 +248,7 @@ bool AIManager::checkForCollisions()
     // does the car bounding sphere collide with the pickup bounding sphere?
     if (boundingSphereCar.Intersects(boundingSpherePU))
     {
-        OutputDebugStringA("A collision has occurred!\n");
+        OutputDebugStringA("A collision with pick up has occurred!\n");
         m_pickups[0]->hasCollided();
         setRandomPickupPosition(m_pickups[0]);
 

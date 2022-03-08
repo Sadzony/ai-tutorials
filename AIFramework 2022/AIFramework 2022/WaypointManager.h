@@ -5,6 +5,7 @@ struct ID3D11Device;
 
 #include <d3d11_1.h> // this has the appropriate directx structures / objects
 #include <DirectXCollision.h> // this is the dx collision class helper
+#include "Debug.h"
 using namespace DirectX; // this means you don't need to put DirectX:: in front of objects like XMVECTOR and so on. 
 
 

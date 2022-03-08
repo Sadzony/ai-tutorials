@@ -20,6 +20,7 @@
     </ClCompile>
     <ClCompile Include="Collidable.cpp" />
     <ClCompile Include="CollisionHelper.cpp" />
+    <ClCompile Include="Debug.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIManager.h" />
@@ -53,6 +54,7 @@
       <Filter>Core %28do not edit%29</Filter>
     </ClInclude>
     <ClInclude Include="CollisionHelper.h" />
+    <ClInclude Include="Debug.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\blue.dds">
