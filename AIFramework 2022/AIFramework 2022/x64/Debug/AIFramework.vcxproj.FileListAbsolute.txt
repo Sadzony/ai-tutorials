@@ -1,1 +1,2 @@
 C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\x64\Debug\AIFramework.exe
+C:\Users\s011308k\Documents\GitHub\ai-tutorials\AIFramework 2022\AIFramework 2022\x64\Debug\AIFramework.exe

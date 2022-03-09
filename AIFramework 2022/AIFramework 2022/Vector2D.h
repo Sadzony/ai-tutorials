@@ -46,6 +46,7 @@ struct Vector2D
     inline double    LengthSq()const;
 
     inline void      Normalize();
+    inline Vector2D Normalized()const;
 
     inline double    Dot(const Vector2D& v2)const;
 
@@ -273,6 +274,22 @@ inline void Vector2D::Normalize()
         this->x /= vector_length;
         this->y /= vector_length;
     }
+}
+
+inline Vector2D Vector2D::Normalized() const
+{
+    double vector_length = this->Length();
+    Vector2D returnVector = Vector2D();
+
+    if (!this->isZero())
+    {
+        returnVector.x = this->x/vector_length;
+        returnVector.y = this->y/vector_length;
+    }
+    else {
+        returnVector.Zero();
+    }
+    return returnVector;
 }
 
 

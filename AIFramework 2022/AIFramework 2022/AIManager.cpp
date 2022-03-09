@@ -110,7 +110,7 @@ void AIManager::mouseUp(int x, int y)
 		return;
 
     // steering mode
-    m_pCar->setPositionTo(wp->getPosition());
+    m_pCar->setTargetPosition(wp->getPosition());
 }
 
 void AIManager::keyUp(WPARAM param)
