@@ -1,13 +1,16 @@
 #include "Vehicle.h"
 
-#define NORMAL_MAX_SPEED 200
-#define SLOW_MAX_SPEED 100
-#define FAST_MAX_SPEED 300
+#define NORMAL_MAX_SPEED 300
 
-HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, carColour colour)
+#define ARRIVAL_RADIUS 200
+
+#define FLEE_RADIUS 250
+
+HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, carColour colour, carBehaviour pbehaviour)
 {
+	behaviour = pbehaviour;
 	m_scale = XMFLOAT3(30, 20, 1);
-
+	m_ChaserPosition = Vector2D();
 	if (colour == carColour::redCar)
 	{
 		setTextureName(L"Resources\\car_red.dds");
@@ -19,8 +22,7 @@ HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, carColour colour)
 
 	HRESULT hr = DrawableGameObject::initMesh(pd3dDevice);
 
-	m_maxSpeed = FAST_MAX_SPEED;
-	m_currentSpeed = m_maxSpeed;
+	m_maxSpeed = NORMAL_MAX_SPEED;
 	setVehiclePosition(Vector2D(0, 0));
 
 	m_lastPosition = Vector2D(0, 0);
@@ -31,11 +33,23 @@ HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, carColour colour)
 void Vehicle::update(const float deltaTime)
 {
 	Vector2D vecToTarget = m_targetPos - m_currentPosition;
-	Vector2D force = vecToTarget.Normalized() * m_currentSpeed;
-	AddForce(force);
-	UpdateNetForce();
-	UpdateAcceleration();
-	Move(deltaTime, vecToTarget);
+	float distance = vecToTarget.Length();
+	float distanceToChaser = (m_ChaserPosition - m_currentPosition).Length();
+	if (fleeToggle && distanceToChaser < FLEE_RADIUS) {
+		Flee();
+	}
+	if (!destinationReached) {
+		if (distance < ARRIVAL_RADIUS) {
+			Arrive();
+		}
+		else {
+			Seek();
+		}
+		UpdateNetForce();
+		UpdateAcceleration();
+		Move(deltaTime, vecToTarget);
+	}
+
 	// rotate the object based on its last & current position
 	Vector2D diff = m_currentPosition - m_lastPosition;
 	if (diff.Length() > 0) { // if zero then don't update rotation
@@ -50,21 +64,11 @@ void Vehicle::update(const float deltaTime)
 	DrawableGameObject::update(deltaTime);
 }
 
-
-// a ratio: a value between 0 and 1 (1 being max speed)
-void Vehicle::setCurrentSpeed(const float speed)
-{
-	m_currentSpeed = m_maxSpeed * speed;
-	m_currentSpeed = max(0, m_currentSpeed);
-	m_currentSpeed = min(m_maxSpeed, m_currentSpeed);
-}
-
 // set a position to move to
 void Vehicle::setTargetPosition(Vector2D position)
 {
-	ZeroPhysics();
+	destinationReached = false;
 	m_startPosition = m_currentPosition;
-	
 	m_targetPos = position;
 }
 
@@ -75,6 +79,11 @@ void Vehicle::setVehiclePosition(Vector2D position)
 	m_targetPos = position;
 	m_startPosition = position;
 	setPosition(position);
+}
+
+void Vehicle::setChaserPosition(Vector2D position)
+{
+	m_ChaserPosition = position;
 }
 
 void Vehicle::setWaypointManager(WaypointManager* wpm)
@@ -138,18 +147,46 @@ void Vehicle::UpdateNetForce()
 void Vehicle::Move(float t, Vector2D direction)
 {
 	float distanceToTarget = (float)direction.Length();
-	// if the distance to the end point is less than the car would move, then only move that distance. 
-	if (distanceToTarget > 0.025) {
+
+	if (distanceToTarget > 5) { //5 pixels of error allowed
 		Vector2D nextStep = velocity * t + (0.5 * acceleration * t * t);
 		velocity += acceleration * t;
 		velocity.Truncate(m_maxSpeed);
-		nextStep.Truncate(distanceToTarget);
+		nextStep.Truncate(distanceToTarget); 	// if the distance to the end point is less than the car would move, then only move that distance. 
 		m_currentPosition += nextStep;
 	}
-	else {
-		velocity.Zero();
-		acceleration.Zero();
+	else if (!destinationReached) {
+		destinationReached = true;
+		//ZeroPhysics();
 	}
+}
+
+void Vehicle::Seek()
+{
+	Vector2D seekingForce;
+	Vector2D direction = m_targetPos - m_currentPosition;
+	seekingForce = direction.Normalized() * m_maxSpeed;
+	seekingForce -= velocity;
+	AddForce(seekingForce);
+}
+
+void Vehicle::Arrive()
+{
+	Vector2D arrivalForce;
+	Vector2D direction = m_targetPos - m_currentPosition;
+	float distance = direction.Length();
+	arrivalForce = direction.Normalized() * m_maxSpeed * (distance/ARRIVAL_RADIUS); //force gets smaller with distance
+	arrivalForce -= velocity;
+	AddForce(arrivalForce);
+}
+
+void Vehicle::Flee()
+{
+	Vector2D fleeingForce;
+	Vector2D direction = m_currentPosition - m_ChaserPosition;
+	fleeingForce = direction.Normalized() * m_maxSpeed;
+	fleeingForce -= velocity;
+	AddForce(fleeingForce);
 }
 
 
