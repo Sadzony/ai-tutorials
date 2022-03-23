@@ -122,7 +122,7 @@ void AIManager::update(const float fDeltaTime)
 	}
     if (m_pCarBlue != nullptr)
     {
-        if (m_pCarBlue->destinationReached) { //if destination reached, generate a new destination
+        if (m_pCarBlue->GetMovementManager()->GetDestinationReached()) { //if destination reached, generate a new destination
             int wpX = rand() % 768 - 384;
             int wpY = rand() % 1024 - 512;
             Waypoint* wp = m_waypointManager.getNearestWaypoint(Vector2D(wpX, wpY));

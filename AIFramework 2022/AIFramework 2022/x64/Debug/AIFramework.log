@@ -1,2 +1,7 @@
-﻿  Vehicle.cpp
+﻿  MovementManager.cpp
+C:\Users\s011308k\Documents\GitHub\ai-tutorials\AIFramework 2022\AIFramework 2022\MovementManager.cpp(68,37): warning C4458: declaration of 'targetPos' hides class member
+C:\Users\s011308k\Documents\GitHub\ai-tutorials\AIFramework 2022\AIFramework 2022\MovementManager.h(46,11): message : see declaration of 'MovementManager::targetPos'
+C:\Users\s011308k\Documents\GitHub\ai-tutorials\AIFramework 2022\AIFramework 2022\MovementManager.cpp(72,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\s011308k\Documents\GitHub\ai-tutorials\AIFramework 2022\AIFramework 2022\MovementManager.cpp(84,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\s011308k\Documents\GitHub\ai-tutorials\AIFramework 2022\AIFramework 2022\MovementManager.cpp(93,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   AIFramework.vcxproj -> C:\Users\s011308k\Documents\GitHub\ai-tutorials\AIFramework 2022\AIFramework 2022\x64\Debug\AIFramework.exe

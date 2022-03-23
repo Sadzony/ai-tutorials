@@ -20,6 +20,9 @@ public:
 	void SetAcceleration(Vector2D pacceleration) { acceleration = pacceleration; }
 	Vector2D GetAcceleration() { return acceleration; }
 
+	void SetDestinationReachedBool(bool pReached) { destinationReached = pReached; }
+	bool GetDestinationReached() { return destinationReached; }
+
 	void AddForce(Vector2D force) { externalForces.push_back(force); } //add force to external forces list
 	Vector2D GetNetForce() { return netForce; }
 

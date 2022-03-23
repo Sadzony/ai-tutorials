@@ -1,8 +1,10 @@
 #include "MovementManager.h"
 
-#define ARRIVAL_RADIUS 200
+#define ARRIVAL_RADIUS 75
 
 #define FLEE_RADIUS 250
+
+#define ARRIVAL_FORCE_MULTIPLIER 1.5
 
 MovementManager::MovementManager(Vector2D startPos, float speed)
 {
@@ -79,8 +81,8 @@ void MovementManager::Seek(Vector2D targetPos)
 void MovementManager::Arrive(Vector2D seekingVec, float distance)
 {
 	Vector2D arrivalForce;
-	float forcePowerMultiplier = 1 - (distance / ARRIVAL_RADIUS);
-	arrivalForce = -1 * seekingVec * forcePowerMultiplier; //force gets smaller with distance
+	float forcePowerMultiplier = 1 - (distance / (ARRIVAL_RADIUS*ARRIVAL_FORCE_MULTIPLIER)); //force gets bigger as distance gets smaller
+	arrivalForce = -1 * seekingVec * forcePowerMultiplier; 
 	arrivalForce -= velocity;
 	AddForce(arrivalForce);
 }
@@ -89,11 +91,13 @@ void MovementManager::Flee(Vector2D chaserPos)
 {
 
 	float distanceToChaser = (chaserPos - m_physicsPosition).Length();
-	Vector2D fleeingForce;
-	Vector2D direction = m_physicsPosition - chaserPos;
-	fleeingForce = direction.Normalized() * m_speed;
-	fleeingForce -= velocity;
-	AddForce(fleeingForce);
+	if (distanceToChaser < FLEE_RADIUS) {
+		Vector2D fleeingForce;
+		Vector2D direction = m_physicsPosition - chaserPos;
+		fleeingForce = direction.Normalized() * m_speed;
+		fleeingForce -= velocity;
+		AddForce(fleeingForce);
+	}
 }
 
 void MovementManager::MoveStep(float t, Vector2D directionVec)
@@ -109,5 +113,6 @@ void MovementManager::MoveStep(float t, Vector2D directionVec)
 	}
 	else {
 		destinationReached = true;
+		ZeroPhysics();
 	}
 }

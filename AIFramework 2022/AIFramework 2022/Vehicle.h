@@ -24,6 +24,7 @@ public:
 	virtual HRESULT initMesh(ID3D11Device* pd3dDevice, carColour colour, carBehaviour behaviour);
 	virtual void update(const float deltaTime);
 
+	MovementManager* GetMovementManager() { return m_movementManager; }
 
 	void setTargetPosition(Vector2D position);
 	void setChaserPosition(Vector2D position) { m_chaserPos = position; }
@@ -32,7 +33,6 @@ public:
 	void hasCollided() {}
 
 	//logic variables
-	bool destinationReached = true;
 	bool fleeToggle = false;
 	carBehaviour behaviour;
 
