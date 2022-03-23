@@ -1,5 +1,2 @@
 ﻿  Vehicle.cpp
-C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\Vehicle.cpp(36,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\Vehicle.cpp(37,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\Vehicle.cpp(177,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  AIFramework.vcxproj -> C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\x64\Debug\AIFramework.exe
+  AIFramework.vcxproj -> C:\Users\s011308k\Documents\GitHub\ai-tutorials\AIFramework 2022\AIFramework 2022\x64\Debug\AIFramework.exe
