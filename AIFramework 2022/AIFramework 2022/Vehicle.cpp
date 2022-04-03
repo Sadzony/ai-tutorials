@@ -1,6 +1,8 @@
 #include "Vehicle.h"
 
-#define NORMAL_MAX_SPEED 300
+#define MAX_SPEED 200
+
+#define STEERING_POWER 400
 
 Vehicle::~Vehicle()
 {
@@ -25,7 +27,7 @@ HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, carColour colour, carBehavio
 
 	m_lastPosition = Vector2D(0, 0);
 
-	m_movementManager = new MovementManager(Vector2D(0,0), NORMAL_MAX_SPEED);
+	m_movementManager = new MovementManager(Vector2D(0,0), MAX_SPEED, STEERING_POWER);
 
 	return hr;
 }

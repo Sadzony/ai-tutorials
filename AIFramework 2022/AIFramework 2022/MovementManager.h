@@ -4,12 +4,12 @@
 class MovementManager
 {
 public:
-	MovementManager(Vector2D startPos, float speed);
+	MovementManager(Vector2D startPos, float p_maxSpeed, float p_accelerationPower);
 
 	void setTargetPos(Vector2D position);
 	Vector2D getTargetPos() { return targetPos; }
 
-	void setSpeed(const float maxSpeed) { m_speed = maxSpeed; }
+	void setMaxSpeed(const float maxSpeed) { m_maxSpeed = maxSpeed; }
 	void setPhysicsPosition(Vector2D position) { m_physicsPosition = position; }
 	Vector2D GetPhysicsPosition() { return m_physicsPosition; }
 
@@ -37,7 +37,7 @@ protected:
 	
 	//steering behaviours
 	void Seek(Vector2D targetPos);
-	void Arrive(Vector2D seekingVec, float distance);
+	void SeekWithArrive(Vector2D targetPos);
 	void Flee(Vector2D chaserPos);
 
 	void MoveStep(float t, Vector2D directionVec); //move the position by one step and update velocity
@@ -45,7 +45,9 @@ protected:
 protected: //propertiess
 	Vector2D targetPos;
 
-	float m_speed;
+	float m_currentSpeed;
+	float m_maxSpeed;
+	float m_maxForcePower;
 	Vector2D m_physicsPosition;
 
 	//forces

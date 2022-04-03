@@ -1,7 +1,9 @@
 ﻿  MovementManager.cpp
-C:\Users\s011308k\Documents\GitHub\ai-tutorials\AIFramework 2022\AIFramework 2022\MovementManager.cpp(68,37): warning C4458: declaration of 'targetPos' hides class member
-C:\Users\s011308k\Documents\GitHub\ai-tutorials\AIFramework 2022\AIFramework 2022\MovementManager.h(46,11): message : see declaration of 'MovementManager::targetPos'
-C:\Users\s011308k\Documents\GitHub\ai-tutorials\AIFramework 2022\AIFramework 2022\MovementManager.cpp(72,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\s011308k\Documents\GitHub\ai-tutorials\AIFramework 2022\AIFramework 2022\MovementManager.cpp(84,29): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\s011308k\Documents\GitHub\ai-tutorials\AIFramework 2022\AIFramework 2022\MovementManager.cpp(93,25): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  AIFramework.vcxproj -> C:\Users\s011308k\Documents\GitHub\ai-tutorials\AIFramework 2022\AIFramework 2022\x64\Debug\AIFramework.exe
+C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\MovementManager.cpp(46,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\MovementManager.cpp(75,37): warning C4458: declaration of 'targetPos' hides class member
+C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\MovementManager.h(46,11): message : see declaration of 'MovementManager::targetPos'
+C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\MovementManager.cpp(85,47): warning C4458: declaration of 'targetPos' hides class member
+C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\MovementManager.h(46,11): message : see declaration of 'MovementManager::targetPos'
+C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\MovementManager.cpp(88,17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\MovementManager.cpp(90,31): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  AIFramework.vcxproj -> C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\x64\Debug\AIFramework.exe

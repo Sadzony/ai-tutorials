@@ -1,16 +1,17 @@
 #include "MovementManager.h"
 
-#define ARRIVAL_RADIUS 75
+#define ARRIVAL_RADIUS 150
 
 #define FLEE_RADIUS 250
 
-#define ARRIVAL_FORCE_MULTIPLIER 1.5
+#define ARRIVAL_MULTIPLIER 1.0
 
-MovementManager::MovementManager(Vector2D startPos, float speed)
+MovementManager::MovementManager(Vector2D startPos, float p_maxSpeed, float p_maxForcePower)
 {
 	m_physicsPosition = startPos;
-	m_speed = speed;
-
+	m_maxSpeed = p_maxSpeed;
+	m_currentSpeed = p_maxSpeed;
+	m_maxForcePower = p_maxForcePower;
 }
 
 void MovementManager::setTargetPos(Vector2D position)
@@ -31,7 +32,7 @@ void MovementManager::Update(const float t)
 {
 	Vector2D vecToTarget = targetPos - m_physicsPosition;
 	if (!destinationReached) {
-		Seek(targetPos);
+		SeekWithArrive(targetPos);
 		UpdateNetForce();
 		UpdateAcceleration();
 		MoveStep(t, vecToTarget);
@@ -42,8 +43,14 @@ void MovementManager::Update(const float t, Vector2D chaserPos)
 {
 	Vector2D vecToTarget = targetPos - m_physicsPosition;
 	if (!destinationReached) {
-		Flee(chaserPos);
-		Seek(targetPos);
+		float distanceToChaser = (chaserPos - m_physicsPosition).Length();
+		if (distanceToChaser < FLEE_RADIUS) {
+			m_currentSpeed = m_maxSpeed;
+			Flee(chaserPos);
+		}
+		else {
+			SeekWithArrive(targetPos);
+		}
 		UpdateNetForce();
 		UpdateAcceleration();
 		MoveStep(t, vecToTarget);
@@ -67,37 +74,38 @@ void MovementManager::UpdateNetForce()
 
 void MovementManager::Seek(Vector2D targetPos)
 {
-	Vector2D seekingForce;
+
 	Vector2D direction = targetPos - m_physicsPosition;
-	float distance = direction.Length();
-	seekingForce = direction.Normalized() * m_speed;
-	seekingForce -= velocity;
-	if (distance < ARRIVAL_RADIUS) {
-		Arrive(seekingForce, distance);
-	}
+	Vector2D seekingForce = direction.Normalized() * m_currentSpeed; //find the desired velocity
+	seekingForce -= velocity; //subtract current velocity to get closer to desired velocity
+	seekingForce.Truncate(m_maxForcePower); //truncate to the acceleration power
 	AddForce(seekingForce);
 }
 
-void MovementManager::Arrive(Vector2D seekingVec, float distance)
+void MovementManager::SeekWithArrive(Vector2D targetPos)
 {
-	Vector2D arrivalForce;
-	float forcePowerMultiplier = 1 - (distance / (ARRIVAL_RADIUS*ARRIVAL_FORCE_MULTIPLIER)); //force gets bigger as distance gets smaller
-	arrivalForce = -1 * seekingVec * forcePowerMultiplier; 
-	arrivalForce -= velocity;
-	AddForce(arrivalForce);
+	Vector2D direction = targetPos - m_physicsPosition;
+	float distance = direction.Length();
+	if (distance < ARRIVAL_RADIUS) {
+		m_currentSpeed = m_maxSpeed * (distance / (ARRIVAL_RADIUS*ARRIVAL_MULTIPLIER));
+	}
+	else {
+		m_currentSpeed = m_maxSpeed;
+	}
+	Vector2D seekingForce = direction.Normalized() * m_currentSpeed; //find the desired velocity
+	seekingForce -= velocity; //subtract current velocity to get closer to desired velocity
+	seekingForce.Truncate(m_maxForcePower); //truncate to the acceleration power
+	AddForce(seekingForce);
 }
 
 void MovementManager::Flee(Vector2D chaserPos)
 {
-
-	float distanceToChaser = (chaserPos - m_physicsPosition).Length();
-	if (distanceToChaser < FLEE_RADIUS) {
-		Vector2D fleeingForce;
-		Vector2D direction = m_physicsPosition - chaserPos;
-		fleeingForce = direction.Normalized() * m_speed;
-		fleeingForce -= velocity;
-		AddForce(fleeingForce);
-	}
+	Vector2D fleeingForce;
+	Vector2D direction = m_physicsPosition - chaserPos;
+	fleeingForce = direction.Normalized() * m_currentSpeed; //find desired velocity
+	fleeingForce -= velocity;
+	fleeingForce.Truncate(m_maxForcePower);
+	AddForce(fleeingForce);
 }
 
 void MovementManager::MoveStep(float t, Vector2D directionVec)
@@ -107,7 +115,7 @@ void MovementManager::MoveStep(float t, Vector2D directionVec)
 	if (distanceToTarget > 5) { //5 pixels of error allowed
 		Vector2D nextStep = velocity * t + (0.5 * acceleration * t * t);
 		velocity += acceleration * t;
-		velocity.Truncate(m_speed); //don't let the velocity be bigger than max speed
+		velocity.Truncate(m_currentSpeed); //don't let the velocity be bigger than speed
 		nextStep.Truncate(distanceToTarget); 	// if the distance to the end point is less than the car would move, then only move that distance. 
 		m_physicsPosition += nextStep;
 	}
