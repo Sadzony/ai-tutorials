@@ -4,14 +4,10 @@
 class MovementManager
 {
 public:
-	MovementManager(Vector2D startPos, float p_maxSpeed, float p_accelerationPower);
+	MovementManager(float p_maxSpeed, float p_accelerationPower);
 
-	void setTargetPos(Vector2D position);
-	Vector2D getTargetPos() { return targetPos; }
-
-	void setMaxSpeed(const float maxSpeed) { m_maxSpeed = maxSpeed; }
-	void setPhysicsPosition(Vector2D position) { m_physicsPosition = position; }
-	Vector2D GetPhysicsPosition() { return m_physicsPosition; }
+	void setMaxSpeed(const float p_maxSpeed) { m_maxSpeed = p_maxSpeed; }
+	float getMaxSpeed() { return m_maxSpeed; }
 
 	//physics get sets
 	void SetVelocity(Vector2D pvelocity) { velocity = pvelocity; }
@@ -20,35 +16,31 @@ public:
 	void SetAcceleration(Vector2D pacceleration) { acceleration = pacceleration; }
 	Vector2D GetAcceleration() { return acceleration; }
 
-	void SetDestinationReachedBool(bool pReached) { destinationReached = pReached; }
-	bool GetDestinationReached() { return destinationReached; }
-
 	void AddForce(Vector2D force) { externalForces.push_back(force); } //add force to external forces list
 	Vector2D GetNetForce() { return netForce; }
 
 	void ZeroPhysics();
 
-	void Update(const float t);
-	void Update(const float t, Vector2D chaserPos);
+	//steering behaviours
+	void Seek(Vector2D targetPos, Vector2D currentPos);
+	void SeekWithArrive(Vector2D targetPos, Vector2D currentPos);
+	void Flee(Vector2D chaserPos, Vector2D currentPos);
+
+	//this function will return the new position after the physics update
+	Vector2D ProcessMovement(const float t, Vector2D currentPos);
+
+	//same as above but also truncates the move step to stop at target
+	Vector2D ProcessMovementWithTrunc(const float t, Vector2D currentPos, float distance);
 
 protected:
 	void UpdateAcceleration(); // apply force to update acceleration
 	void UpdateNetForce(); //add up each force in the external forces list
-	
-	//steering behaviours
-	void Seek(Vector2D targetPos);
-	void SeekWithArrive(Vector2D targetPos);
-	void Flee(Vector2D chaserPos);
-
-	void MoveStep(float t, Vector2D directionVec); //move the position by one step and update velocity
 
 protected: //propertiess
-	Vector2D targetPos;
 
 	float m_currentSpeed;
 	float m_maxSpeed;
-	float m_maxForcePower;
-	Vector2D m_physicsPosition;
+	float m_steeringPower;
 
 	//forces
 	Vector2D netForce;
@@ -56,7 +48,5 @@ protected: //propertiess
 	Vector2D velocity;
 	Vector2D acceleration;
 
-	//logic
-	bool destinationReached = true;
 };
 

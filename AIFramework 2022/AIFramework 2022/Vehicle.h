@@ -5,46 +5,43 @@
 #include "Vector2D.h"
 #include "Collidable.h"
 #include "MovementManager.h"
-
 enum class carColour
 {
 	redCar,
 	blueCar,
-};
-enum class carBehaviour {
-	wander,
-	arriveToMouse,
-	seekVehicle
 };
 
 class Vehicle : public DrawableGameObject, public Collidable
 {
 public:
 	~Vehicle();
-	virtual HRESULT initMesh(ID3D11Device* pd3dDevice, carColour colour, carBehaviour behaviour);
+	virtual HRESULT initMesh(ID3D11Device* pd3dDevice, carColour colour);
 	virtual void update(const float deltaTime);
 
 	MovementManager* GetMovementManager() { return m_movementManager; }
+	WaypointManager* GetWaypointManager() { return m_waypointManager; }
 
-	void setTargetPosition(Vector2D position);
-	void setChaserPosition(Vector2D position) { m_chaserPos = position; }
+	Vector2D getTargetPos() { return m_targetPos; }
+	void setTargetPos(Vector2D p_targetPos) { m_targetPos = p_targetPos; }
+
+	Vector2D getFleePos() { return m_fleePos; }
+	void setFleePos(Vector2D p_fleePos) { m_fleePos = p_fleePos; }
+
 	void setVehiclePosition(Vector2D position); // the current position - this resets positionTo
 	void setWaypointManager(WaypointManager* wpm);
 	void hasCollided() {}
 
-	//logic variables
-	bool fleeToggle = false;
-	carBehaviour behaviour;
-
 protected: // preotected properties
-	
-	Vector2D m_chaserPos;
+
+	Vector2D m_targetPos;
+	Vector2D m_fleePos;
+
 
 	Vector2D m_currentPosition;
 	Vector2D m_lastPosition;
+
 	WaypointManager* m_waypointManager;
 
 	MovementManager* m_movementManager;
-
 };
 

@@ -1,6 +1,9 @@
 #pragma once
 
 #include "WaypointManager.h"
+#include "Vehicle.h"
+#include "StateManager.h"
+#include "StateList.h"
 
 using namespace std;
 
@@ -26,8 +29,10 @@ protected:
 
 private:
 	vecPickups              m_pickups;
-	Vehicle*				m_pCarRed = nullptr;
 	Vehicle*				m_pCarBlue = nullptr;
+	StateManager*			m_redCarStateMachine;
+	StateManager*			m_blueCarStateMachine;
+	Vehicle*				m_pCarRed = nullptr;
 	WaypointManager			m_waypointManager;
 
 };

@@ -7,13 +7,14 @@
 Vehicle::~Vehicle()
 {
 	delete m_movementManager;
+	m_movementManager = nullptr;
 }
 
-HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, carColour colour, carBehaviour pbehaviour)
+HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, carColour colour)
 {
-	behaviour = pbehaviour;
 	m_scale = XMFLOAT3(30, 20, 1);
-	m_chaserPos = Vector2D();
+	m_fleePos = Vector2D();
+	m_targetPos = Vector2D();
 	if (colour == carColour::redCar)
 	{
 		setTextureName(L"Resources\\car_red.dds");
@@ -27,20 +28,13 @@ HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, carColour colour, carBehavio
 
 	m_lastPosition = Vector2D(0, 0);
 
-	m_movementManager = new MovementManager(Vector2D(0,0), MAX_SPEED, STEERING_POWER);
+	m_movementManager = new MovementManager(MAX_SPEED, STEERING_POWER);
 
 	return hr;
 }
 
 void Vehicle::update(const float deltaTime)
 {
-	if (!fleeToggle) {
-		m_movementManager->Update(deltaTime);
-	}
-	else {
-		m_movementManager->Update(deltaTime, m_chaserPos);
-	}
-	m_currentPosition = m_movementManager->GetPhysicsPosition();
 
 	// rotate the object based on its last & current position
 	Vector2D diff = m_currentPosition - m_lastPosition;
@@ -56,17 +50,9 @@ void Vehicle::update(const float deltaTime)
 	DrawableGameObject::update(deltaTime);
 }
 
-// set a position to move to
-void Vehicle::setTargetPosition(Vector2D position)
-{
-	m_movementManager->setTargetPos(position);
-
-}
-
 // set the current position
 void Vehicle::setVehiclePosition(Vector2D position)
 {
-	m_movementManager->setPhysicsPosition(position);
 	m_currentPosition = position;
 	setPosition(position);
 }

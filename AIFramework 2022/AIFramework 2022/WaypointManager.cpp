@@ -65,6 +65,11 @@ HRESULT WaypointManager::createWaypoints(ID3D11Device* pd3dDevice)
 		{
 			m_quadpoints.push_back(wp);
 		}
+		
+	}
+	//calculate all connections between waypoints
+	for (unsigned int i = 0; i < m_waypoints.size(); i++) {
+		calculateNeighbouringWaypoints(m_waypoints[i]);
 	}
 
 	// pathfinding
@@ -143,11 +148,12 @@ Waypoint* WaypointManager::getNearestWaypoint(Vector2D position)
 	return nearestWP;
 }
 
-vecWaypoints WaypointManager::getNeighbouringWaypoints(Waypoint* waypoint)
+vecWaypoints* WaypointManager::calculateNeighbouringWaypoints(Waypoint* waypoint)
 {
 	// not very efficient, should ideally be pre-cached. 
 	// should also return a pointer to a vector, not a copy
-	vecWaypoints nearest;
+	vecWaypoints* neighbours = waypoint->getNeighbours();
+	neighbours->clear();
 	for (Waypoint* wp : m_waypoints)
 	{
 		float d = waypoint->distanceToWaypoint(wp);
@@ -156,12 +162,18 @@ vecWaypoints WaypointManager::getNeighbouringWaypoints(Waypoint* waypoint)
 			// A line between waypoint and a nearby waypoint may cross a building (and so the car would go through the building). This makes sure this doesn't happen. 
 			if (doWaypointsCrossBuilding(waypoint, wp) == false)
 			{
-				nearest.push_back(wp);
+				neighbours->push_back(wp);
 			}
 		}
 	}
 
-	return nearest;
+	return neighbours;
+}
+
+vecWaypoints* WaypointManager::getNeighbouringWaypoints(Waypoint* waypoint)
+{
+	vecWaypoints* neighbours = waypoint->getNeighbours();
+	return neighbours;
 }
 
 bool WaypointManager::doWaypointsCrossBuilding(Waypoint* wp1, Waypoint* wp2)

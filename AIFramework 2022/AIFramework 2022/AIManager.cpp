@@ -1,15 +1,15 @@
 #include "AIManager.h"
-#include "Vehicle.h"
 #include "DrawableGameObject.h"
 #include "PickupItem.h"
 #include "Waypoint.h"
 #include "main.h"
 #include "constants.h"
 
+
 AIManager::AIManager()
 {
-	m_pCarRed = nullptr;
-    m_pCarBlue = nullptr;
+	m_pCarBlue = nullptr;
+    m_pCarRed = nullptr;
 }
 
 AIManager::~AIManager()
@@ -27,11 +27,18 @@ void AIManager::release()
 	}
 	m_pickups.clear();
 
-	delete m_pCarRed;
-	m_pCarRed = nullptr;
+	delete m_pCarBlue;
+    delete m_redCarStateMachine;
+    m_redCarStateMachine = nullptr;
+	m_pCarBlue = nullptr;
 
-    delete m_pCarBlue;
-    m_pCarBlue = nullptr;
+    delete m_pCarRed;
+    delete m_blueCarStateMachine;
+    m_blueCarStateMachine = nullptr;
+    m_pCarRed = nullptr;
+
+    
+
 }
 
 HRESULT AIManager::initialise(ID3D11Device* pd3dDevice)
@@ -42,24 +49,26 @@ HRESULT AIManager::initialise(ID3D11Device* pd3dDevice)
     float xPos = -500; // an abtrirary start point
     float yPos = 300;
 
-    m_pCarRed = new Vehicle();
-    HRESULT hr = m_pCarRed->initMesh(pd3dDevice, carColour::redCar, carBehaviour::arriveToMouse);
-    m_pCarRed->setVehiclePosition(Vector2D(xPos, yPos));
+    m_pCarBlue = new Vehicle();
+    HRESULT hr = m_pCarBlue->initMesh(pd3dDevice, carColour::blueCar);
+    m_pCarBlue->setVehiclePosition(Vector2D(xPos, yPos));
+    m_blueCarStateMachine = new StateManager(m_pCarBlue);
     if (FAILED(hr))
         return hr;
 
     xPos = 500; // an abtrirary start point
     yPos = 300;
-    m_pCarBlue = new Vehicle();
-    hr = m_pCarBlue->initMesh(pd3dDevice, carColour::blueCar, carBehaviour::wander);
-    m_pCarBlue->setVehiclePosition(Vector2D(xPos, yPos));
+    m_pCarRed = new Vehicle();
+    hr = m_pCarRed->initMesh(pd3dDevice, carColour::redCar);
+    m_pCarRed->setVehiclePosition(Vector2D(xPos, yPos));
+    m_redCarStateMachine = new StateManager(m_pCarRed);
     if (FAILED(hr))
         return hr;
 
     // setup the waypoints
     m_waypointManager.createWaypoints(pd3dDevice);
-    m_pCarRed->setWaypointManager(&m_waypointManager);
     m_pCarBlue->setWaypointManager(&m_waypointManager);
+    m_pCarRed->setWaypointManager(&m_waypointManager);
 
     // create a passenger pickup item
     PickupItem* pPickupPassenger = new PickupItem();
@@ -96,40 +105,38 @@ void AIManager::update(const float fDeltaTime)
     }
 
 	// draw the waypoints nearest to the car
-	/*
-    Waypoint* wp = m_waypointManager.getNearestWaypoint(m_pCarRed->getPosition());
+	
+    Waypoint* wp = m_waypointManager.getNearestWaypoint(m_pCarBlue->getPosition());
 	if (wp != nullptr)
 	{
-		vecWaypoints vwps = m_waypointManager.getNeighbouringWaypoints(wp);
-		for (Waypoint* wp : vwps)
+		vecWaypoints* vwps = m_waypointManager.getNeighbouringWaypoints(wp);
+		for (Waypoint* wp : *vwps)
 		{
 			AddItemToDrawList(wp);
 		}
 	}
-    */
+    
 
     // update and draw the car (and check for pickup collisions)
-	if (m_pCarRed != nullptr)
+	if (m_pCarBlue != nullptr)
 	{
-        m_pCarRed->setChaserPosition(m_pCarBlue->getPosition());
-        if (m_pCarRed->behaviour == carBehaviour::seekVehicle) {
-            m_pCarRed->fleeToggle = false;
-            m_pCarRed->setTargetPosition(m_pCarBlue->getPosition());
-        }
-		m_pCarRed->update(fDeltaTime);
+        m_pCarBlue->setFleePos(m_pCarRed->getPosition());
+        m_blueCarStateMachine->Update(fDeltaTime);
+		m_pCarBlue->update(fDeltaTime);
 		checkForCollisions();
-		AddItemToDrawList(m_pCarRed);
+		AddItemToDrawList(m_pCarBlue);
 	}
-    if (m_pCarBlue != nullptr)
+    if (m_pCarRed != nullptr)
     {
-        if (m_pCarBlue->GetMovementManager()->GetDestinationReached()) { //if destination reached, generate a new destination
-            int wpX = rand() % 768 - 384;
-            int wpY = rand() % 1024 - 512;
-            Waypoint* wp = m_waypointManager.getNearestWaypoint(Vector2D(wpX, wpY));
-            m_pCarBlue->setTargetPosition(wp->getPosition());
-        }
-        m_pCarBlue->update(fDeltaTime);
-        AddItemToDrawList(m_pCarBlue);
+        //if (m_pCarBlue->GetMovementManager()->GetDestinationReached()) { //if destination reached, generate a new destination
+        //    int wpX = rand() % 768 - 384;
+        //    int wpY = rand() % 1024 - 512;
+        //    Waypoint* wp = m_waypointManager.getNearestWaypoint(Vector2D(wpX, wpY));
+        //    m_pCarBlue->setTargetPosition(wp->getPosition());
+        //}
+        m_redCarStateMachine->Update(fDeltaTime);
+        m_pCarRed->update(fDeltaTime);
+        AddItemToDrawList(m_pCarRed);
     }
 }
 
@@ -140,10 +147,8 @@ void AIManager::mouseUp(int x, int y)
 	if (wp == nullptr)
 		return;
 
-    // steering mode
-    if (m_pCarRed->behaviour == carBehaviour::arriveToMouse) {
-        m_pCarRed->setTargetPosition(wp->getPosition());
-    }
+    m_pCarBlue->setTargetPos(wp->getPosition());
+    m_blueCarStateMachine->ChangeState(new ArriveToTarget());
 }
 
 void AIManager::keyUp(WPARAM param)
@@ -185,21 +190,16 @@ void AIManager::keyDown(WPARAM param)
         }
         case key_a:
         {
-            m_pCarRed->behaviour = carBehaviour::arriveToMouse;
+
             break;
         }
 		case key_s:
 		{
-            m_pCarRed->behaviour = carBehaviour::seekVehicle;
+
 			break;
 		}
         case 0x46: //f key
-            if (m_pCarRed->fleeToggle == false) {
-                m_pCarRed->fleeToggle = true;
-            }
-            else {
-                m_pCarRed->fleeToggle = false;
-            }
+
             break;
         case key_t:
 		{
@@ -258,7 +258,7 @@ bool AIManager::checkForCollisions()
         &carScale,
         &dummy,
         &carPos,
-        XMLoadFloat4x4(m_pCarRed->getTransform())
+        XMLoadFloat4x4(m_pCarBlue->getTransform())
     );
 
     // create a bounding sphere for the car

@@ -39,7 +39,8 @@ public:
 	//Waypoint* getWaypoint(const int x, const  int y);
 	//vecWaypoints getNeighbouringWaypoints(const int x, const  int y);
 
-	vecWaypoints getNeighbouringWaypoints(Waypoint* waypoint);
+	vecWaypoints* calculateNeighbouringWaypoints(Waypoint* waypoint);
+	vecWaypoints* getNeighbouringWaypoints(Waypoint* waypoint);
 	Waypoint* getNearestWaypoint(Vector2D position);
 
 protected: // methods

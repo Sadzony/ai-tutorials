@@ -361,39 +361,51 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AIManager.cpp" />
+    <ClCompile Include="ArriveToTarget.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Chase.cpp" />
     <ClCompile Include="Collidable.cpp" />
     <ClCompile Include="CollisionHelper.cpp" />
     <ClCompile Include="DDSTextureLoader.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="DrawableGameObject.cpp" />
+    <ClCompile Include="Flee.cpp" />
     <ClCompile Include="main.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="MovementManager.cpp" />
     <ClCompile Include="PickupItem.cpp" />
+    <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="Vehicle.cpp" />
+    <ClCompile Include="Wander.cpp" />
     <ClCompile Include="Waypoint.cpp" />
     <ClCompile Include="WaypointManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIManager.h" />
+    <ClInclude Include="ArriveToTarget.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Chase.h" />
     <ClInclude Include="Collidable.h" />
     <ClInclude Include="CollisionHelper.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="DDSTextureLoader.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="DrawableGameObject.h" />
+    <ClInclude Include="Flee.h" />
     <ClInclude Include="main.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="MovementManager.h" />
     <ClInclude Include="PickupItem.h" />
     <CLInclude Include="resource.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="StateList.h" />
+    <ClInclude Include="StateManager.h" />
     <ClInclude Include="structures.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="Vehicle.h" />
+    <ClInclude Include="Wander.h" />
     <ClInclude Include="Waypoint.h" />
     <ClInclude Include="WaypointManager.h" />
     <ResourceCompile Include="AIFramework.rc" />

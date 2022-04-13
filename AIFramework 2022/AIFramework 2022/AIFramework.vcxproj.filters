@@ -22,6 +22,21 @@
     <ClCompile Include="CollisionHelper.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="MovementManager.cpp" />
+    <ClCompile Include="StateManager.cpp">
+      <Filter>State Machine</Filter>
+    </ClCompile>
+    <ClCompile Include="ArriveToTarget.cpp">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClCompile>
+    <ClCompile Include="Wander.cpp">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClCompile>
+    <ClCompile Include="Chase.cpp">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClCompile>
+    <ClCompile Include="Flee.cpp">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIManager.h" />
@@ -57,6 +72,27 @@
     <ClInclude Include="CollisionHelper.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="MovementManager.h" />
+    <ClInclude Include="StateManager.h">
+      <Filter>State Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>State Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="ArriveToTarget.h">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClInclude>
+    <ClInclude Include="StateList.h">
+      <Filter>State Machine</Filter>
+    </ClInclude>
+    <ClInclude Include="Wander.h">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClInclude>
+    <ClInclude Include="Chase.h">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClInclude>
+    <ClInclude Include="Flee.h">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\blue.dds">
@@ -99,6 +135,12 @@
     </Filter>
     <Filter Include="Core %28do not edit%29">
       <UniqueIdentifier>{c721d74b-61d3-4ae0-9d17-be739d070a1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State Machine">
+      <UniqueIdentifier>{d77dc4e6-4f59-4d39-b406-74a5b0e7095f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State Machine\Vehicle States">
+      <UniqueIdentifier>{8f7f3c38-d5fa-4c56-b5d8-fd22bfb35504}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
