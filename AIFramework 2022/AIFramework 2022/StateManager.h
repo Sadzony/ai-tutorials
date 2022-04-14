@@ -11,6 +11,7 @@ public:
 
 protected:
 	State* m_currentState;
+	State* m_previousState;
 	Vehicle* m_agent;
 };
 

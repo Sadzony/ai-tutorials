@@ -1,14 +1,3 @@
-﻿  AIManager.cpp
-C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\State.h(9,46): warning C4100: 't': unreferenced formal parameter
-C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\State.h(9,31): warning C4100: 'p_agent': unreferenced formal parameter
-C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\AIManager.cpp(46,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\AIManager.cpp(113,28): warning C4456: declaration of 'wp' hides previous local declaration
-C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\AIManager.cpp(109,15): message : see declaration of 'wp'
-  StateManager.cpp
-C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\State.h(9,46): warning C4100: 't': unreferenced formal parameter
-C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\State.h(9,31): warning C4100: 'p_agent': unreferenced formal parameter
-  main.cpp
-C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\State.h(9,46): warning C4100: 't': unreferenced formal parameter
-C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\State.h(9,31): warning C4100: 'p_agent': unreferenced formal parameter
-  Generating Code...
+﻿  StateManager.cpp
+C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\State.h(10,28): warning C4100: 't': unreferenced formal parameter
   AIFramework.vcxproj -> C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\x64\Debug\AIFramework.exe

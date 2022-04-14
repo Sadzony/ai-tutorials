@@ -26,7 +26,9 @@ public:
 	void SeekWithArrive(Vector2D targetPos, Vector2D currentPos);
 	void Flee(Vector2D chaserPos, Vector2D currentPos);
 
-	//this function will return the new position after the physics update
+	Vector2D ReturnPosAfterStep(const float t, Vector2D currentPos);
+
+	//this function will return the new position after the physics update, and update with new values
 	Vector2D ProcessMovement(const float t, Vector2D currentPos);
 
 	//same as above but also truncates the move step to stop at target

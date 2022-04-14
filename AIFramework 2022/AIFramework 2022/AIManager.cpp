@@ -120,7 +120,6 @@ void AIManager::update(const float fDeltaTime)
     // update and draw the car (and check for pickup collisions)
 	if (m_pCarBlue != nullptr)
 	{
-        m_pCarBlue->setFleePos(m_pCarRed->getPosition());
         m_blueCarStateMachine->Update(fDeltaTime);
 		m_pCarBlue->update(fDeltaTime);
 		checkForCollisions();
@@ -148,7 +147,7 @@ void AIManager::mouseUp(int x, int y)
 		return;
 
     m_pCarBlue->setTargetPos(wp->getPosition());
-    m_blueCarStateMachine->ChangeState(new ArriveToTarget());
+    
 }
 
 void AIManager::keyUp(WPARAM param)
@@ -168,8 +167,32 @@ void AIManager::keyDown(WPARAM param)
 {
 	// hint 65-90 are a-z
 	const WPARAM key_a = 65;
-	const WPARAM key_s = 83;
+    const WPARAM key_b = 66;
+    const WPARAM key_c = 67;
+    const WPARAM key_d = 68;
+    const WPARAM key_e = 69;
+    const WPARAM key_f = 70;
+    const WPARAM key_g = 71;
+    const WPARAM key_h = 72;
+    const WPARAM key_i = 73;
+    const WPARAM key_j = 74;
+    const WPARAM key_k = 75;
+    const WPARAM key_l = 76;
+    const WPARAM key_m = 77;
+    const WPARAM key_n = 78;
+    const WPARAM key_o = 79;
+    const WPARAM key_p = 80;
+    const WPARAM key_q = 81;
+    const WPARAM key_r = 82;
+    const WPARAM key_s = 83;
     const WPARAM key_t = 84;
+    const WPARAM key_u = 85;
+    const WPARAM key_v = 86;
+    const WPARAM key_w = 87;
+    const WPARAM key_x = 88;
+    const WPARAM key_y = 89;
+    const WPARAM key_z = 90;
+
 
     switch (param)
     {
@@ -190,19 +213,49 @@ void AIManager::keyDown(WPARAM param)
         }
         case key_a:
         {
-
+            m_blueCarStateMachine->ChangeState(new ArriveToTarget(m_pCarBlue));
+            break;
+        }
+        case key_c:
+        {
+            Follow* followState = new Follow(m_pCarRed, m_pCarBlue);
+            m_redCarStateMachine->ChangeState(followState);
+            break;
+        }
+        case key_f:
+        {
+            Flee* fleeState = new Flee(m_pCarBlue, m_pCarRed);
+            m_blueCarStateMachine->ChangeState(fleeState);
+            break;
+        }
+        case key_o: 
+        {
+            //obstacle avoidance
+            break;
+        }
+        case key_p:
+        {
+            Pursue* pursueState = new Pursue(m_pCarRed, m_pCarBlue);
+            m_redCarStateMachine->ChangeState(pursueState);
+            break;
+        }
+        case key_r:
+        {
+            //reset positions and states
+            m_pCarBlue->Reset();
+            m_blueCarStateMachine->ChangeState(new State());
+            m_pCarRed->Reset();
+            m_redCarStateMachine->ChangeState(new State());
             break;
         }
 		case key_s:
 		{
-
-			break;
-		}
-        case 0x46: //f key
-
+            m_blueCarStateMachine->ChangeState(new Seek(m_pCarBlue));
             break;
+		}
         case key_t:
 		{
+            //traverse
             break;
         }
         case VK_SPACE:

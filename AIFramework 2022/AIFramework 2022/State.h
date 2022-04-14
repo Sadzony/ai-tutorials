@@ -6,7 +6,8 @@ public:
 	State() { ; }
 	virtual void EnterState() { ; }
 	virtual void ExitState() { ; }
-	virtual void Update(Vehicle* p_agent, float t) { ; }
+	virtual void Cleanup() { ; }
+	virtual void Update(float t) { ; }
 	bool completed = false;
 };
 

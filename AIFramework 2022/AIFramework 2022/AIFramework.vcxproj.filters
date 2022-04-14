@@ -31,10 +31,16 @@
     <ClCompile Include="Wander.cpp">
       <Filter>State Machine\Vehicle States</Filter>
     </ClCompile>
-    <ClCompile Include="Chase.cpp">
+    <ClCompile Include="Follow.cpp">
       <Filter>State Machine\Vehicle States</Filter>
     </ClCompile>
     <ClCompile Include="Flee.cpp">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClCompile>
+    <ClCompile Include="Seek.cpp">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClCompile>
+    <ClCompile Include="Pursue.cpp">
       <Filter>State Machine\Vehicle States</Filter>
     </ClCompile>
   </ItemGroup>
@@ -87,10 +93,16 @@
     <ClInclude Include="Wander.h">
       <Filter>State Machine\Vehicle States</Filter>
     </ClInclude>
-    <ClInclude Include="Chase.h">
+    <ClInclude Include="Follow.h">
       <Filter>State Machine\Vehicle States</Filter>
     </ClInclude>
     <ClInclude Include="Flee.h">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClInclude>
+    <ClInclude Include="Seek.h">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClInclude>
+    <ClInclude Include="Pursue.h">
       <Filter>State Machine\Vehicle States</Filter>
     </ClInclude>
   </ItemGroup>

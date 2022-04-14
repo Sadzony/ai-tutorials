@@ -1,10 +1,8 @@
 #include "MovementManager.h"
 
-#define ARRIVAL_RADIUS 150
+#define ARRIVAL_RADIUS 120
 
-#define FLEE_RADIUS 250
-
-#define ARRIVAL_MULTIPLIER 1.0
+#define ARRIVAL_MULTIPLIER 1.35
 
 MovementManager::MovementManager(float p_maxSpeed, float p_steeringPower)
 {
@@ -24,6 +22,9 @@ void MovementManager::Seek(Vector2D targetPos, Vector2D currentPos)
 {
 	m_currentSpeed = m_maxSpeed;
 	Vector2D direction = targetPos - currentPos;
+	if (direction.isZero()) {
+		return;
+	}
 	Vector2D seekingForce = direction.Normalized() * m_currentSpeed; //find the desired velocity
 	seekingForce -= velocity; //subtract current velocity to get closer to desired velocity
 	seekingForce.Truncate(m_steeringPower); //truncate to the acceleration power
@@ -32,6 +33,9 @@ void MovementManager::Seek(Vector2D targetPos, Vector2D currentPos)
 void MovementManager::SeekWithArrive(Vector2D targetPos, Vector2D currentPos)
 {
 	Vector2D direction = targetPos - currentPos;
+	if (direction.isZero()) {
+		return;
+	}
 	float distance = direction.Length();
 	if (distance < ARRIVAL_RADIUS) {
 		m_currentSpeed = m_maxSpeed * (distance / (ARRIVAL_RADIUS * ARRIVAL_MULTIPLIER)); //limits the speed depending on how close to the target we are. Arrival multiplier makes the slow stronger
@@ -49,10 +53,17 @@ void MovementManager::Flee(Vector2D chaserPos, Vector2D currentPos)
 	m_currentSpeed = m_maxSpeed;
 	Vector2D fleeingForce;
 	Vector2D direction = currentPos - chaserPos;
+	if (direction.isZero()) {
+		return;
+	}
 	fleeingForce = direction.Normalized() * m_currentSpeed; //find desired velocity
 	fleeingForce -= velocity;
 	fleeingForce.Truncate(m_steeringPower);
 	AddForce(fleeingForce);
+}
+Vector2D MovementManager::ReturnPosAfterStep(const float t, Vector2D currentPos)
+{
+	return currentPos + ( velocity * t + (0.5 * acceleration * t * t));
 }
 Vector2D MovementManager::ProcessMovement(const float t, Vector2D currentPos)
 {

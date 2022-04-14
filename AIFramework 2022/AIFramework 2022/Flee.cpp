@@ -1,6 +1,20 @@
 #include "Flee.h"
-
-void Flee::Update(Vehicle* p_agent, float t)
+#define FLEE_RADIUS 350
+void Flee::Update(float t)
 {
-	p_agent->GetMovementManager()->Flee(p_agent->getFleePos(), p_agent->getPosition());
+	Vector2D curPos = m_agent->getPosition();
+	MovementManager* movement = m_agent->GetMovementManager();
+	movement->Flee(m_fleeTarget->getPosition(), curPos);
+	m_agent->setVehiclePosition(movement->ProcessMovement(t, curPos));
+	float length = (m_agent->getPosition() - m_fleeTarget->getPosition()).Length();
+	if (length > FLEE_RADIUS) { //check if outside of radius. If true, then inform state manager that task complete
+		completed = true;
+	}
 }
+
+void Flee::Cleanup()
+{
+	m_agent = nullptr;
+	m_fleeTarget = nullptr;
+}
+

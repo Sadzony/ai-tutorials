@@ -363,7 +363,7 @@
     <ClCompile Include="AIManager.cpp" />
     <ClCompile Include="ArriveToTarget.cpp" />
     <ClCompile Include="Background.cpp" />
-    <ClCompile Include="Chase.cpp" />
+    <ClCompile Include="Follow.cpp" />
     <ClCompile Include="Collidable.cpp" />
     <ClCompile Include="CollisionHelper.cpp" />
     <ClCompile Include="DDSTextureLoader.cpp" />
@@ -375,6 +375,8 @@
     </ClCompile>
     <ClCompile Include="MovementManager.cpp" />
     <ClCompile Include="PickupItem.cpp" />
+    <ClCompile Include="Pursue.cpp" />
+    <ClCompile Include="Seek.cpp" />
     <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="Vehicle.cpp" />
     <ClCompile Include="Wander.cpp" />
@@ -385,7 +387,7 @@
     <ClInclude Include="AIManager.h" />
     <ClInclude Include="ArriveToTarget.h" />
     <ClInclude Include="Background.h" />
-    <ClInclude Include="Chase.h" />
+    <ClInclude Include="Follow.h" />
     <ClInclude Include="Collidable.h" />
     <ClInclude Include="CollisionHelper.h" />
     <ClInclude Include="constants.h" />
@@ -398,7 +400,9 @@
     </ClInclude>
     <ClInclude Include="MovementManager.h" />
     <ClInclude Include="PickupItem.h" />
+    <ClInclude Include="Pursue.h" />
     <CLInclude Include="resource.h" />
+    <ClInclude Include="Seek.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateList.h" />
     <ClInclude Include="StateManager.h" />

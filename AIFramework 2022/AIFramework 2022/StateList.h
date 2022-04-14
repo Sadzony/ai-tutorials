@@ -1,5 +1,7 @@
 #pragma once
 #include "ArriveToTarget.h"
 #include "Wander.h"
-#include "Chase.h"
+#include "Follow.h"
 #include "Flee.h"
+#include "Seek.h"
+#include "Pursue.h"

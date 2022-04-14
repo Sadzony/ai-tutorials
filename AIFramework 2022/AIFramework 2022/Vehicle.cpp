@@ -2,7 +2,7 @@
 
 #define MAX_SPEED 200
 
-#define STEERING_POWER 400
+#define MAX_STEERING_POWER 400
 
 Vehicle::~Vehicle()
 {
@@ -13,7 +13,6 @@ Vehicle::~Vehicle()
 HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, carColour colour)
 {
 	m_scale = XMFLOAT3(30, 20, 1);
-	m_fleePos = Vector2D();
 	m_targetPos = Vector2D();
 	if (colour == carColour::redCar)
 	{
@@ -28,7 +27,7 @@ HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, carColour colour)
 
 	m_lastPosition = Vector2D(0, 0);
 
-	m_movementManager = new MovementManager(MAX_SPEED, STEERING_POWER);
+	m_movementManager = new MovementManager(MAX_SPEED, MAX_STEERING_POWER);
 
 	return hr;
 }
@@ -60,6 +59,13 @@ void Vehicle::setVehiclePosition(Vector2D position)
 void Vehicle::setWaypointManager(WaypointManager* wpm)
 {
 	m_waypointManager = wpm;
+}
+
+void Vehicle::Reset()
+{
+	m_movementManager->ZeroPhysics();
+	setVehiclePosition(Vector2D());
+	m_targetPos = Vector2D();
 }
 
 

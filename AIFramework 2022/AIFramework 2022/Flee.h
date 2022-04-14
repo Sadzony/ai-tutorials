@@ -3,6 +3,13 @@
 class Flee :
     public State
 {
-    virtual void Update(Vehicle* p_agent, float t) override;
+public:
+    Flee(Vehicle* p_agent, Vehicle* p_fleeTarget) { m_agent = p_agent; m_fleeTarget = p_fleeTarget; }
+    virtual void Update(float t) override;
+    virtual void Cleanup() override;
+    void setFleeTarget(Vehicle* p_fleeTarget) { m_fleeTarget = p_fleeTarget; }
+protected:
+    Vehicle* m_agent;
+    Vehicle* m_fleeTarget;
 };
 

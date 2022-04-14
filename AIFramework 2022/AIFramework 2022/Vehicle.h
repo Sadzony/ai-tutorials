@@ -24,17 +24,15 @@ public:
 	Vector2D getTargetPos() { return m_targetPos; }
 	void setTargetPos(Vector2D p_targetPos) { m_targetPos = p_targetPos; }
 
-	Vector2D getFleePos() { return m_fleePos; }
-	void setFleePos(Vector2D p_fleePos) { m_fleePos = p_fleePos; }
-
 	void setVehiclePosition(Vector2D position); // the current position - this resets positionTo
 	void setWaypointManager(WaypointManager* wpm);
 	void hasCollided() {}
 
+	void Reset();
+
 protected: // preotected properties
 
 	Vector2D m_targetPos;
-	Vector2D m_fleePos;
 
 
 	Vector2D m_currentPosition;
