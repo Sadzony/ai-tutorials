@@ -150,8 +150,7 @@ Waypoint* WaypointManager::getNearestWaypoint(Vector2D position)
 
 vecWaypoints* WaypointManager::calculateNeighbouringWaypoints(Waypoint* waypoint)
 {
-	// not very efficient, should ideally be pre-cached. 
-	// should also return a pointer to a vector, not a copy
+	//gets the pointer to the neighbours vector stored in a waypoint. Recalculates the neighbours. returns the pointer
 	vecWaypoints* neighbours = waypoint->getNeighbours();
 	neighbours->clear();
 	for (Waypoint* wp : m_waypoints)

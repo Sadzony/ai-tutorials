@@ -361,6 +361,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AIManager.cpp" />
+    <ClCompile Include="ArriveAndAvoid.cpp" />
     <ClCompile Include="ArriveToTarget.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Follow.cpp" />
@@ -374,6 +375,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="MovementManager.cpp" />
+    <ClCompile Include="Navigation.cpp" />
     <ClCompile Include="PickupItem.cpp" />
     <ClCompile Include="Pursue.cpp" />
     <ClCompile Include="Seek.cpp" />
@@ -385,6 +387,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIManager.h" />
+    <ClInclude Include="ArriveAndAvoid.h" />
     <ClInclude Include="ArriveToTarget.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="Follow.h" />
@@ -399,6 +402,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="MovementManager.h" />
+    <ClInclude Include="Navigation.h" />
     <ClInclude Include="PickupItem.h" />
     <ClInclude Include="Pursue.h" />
     <CLInclude Include="resource.h" />

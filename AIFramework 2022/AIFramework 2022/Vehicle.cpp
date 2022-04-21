@@ -1,13 +1,18 @@
 #include "Vehicle.h"
 
-#define MAX_SPEED 200
+#define MAX_SPEED 150
 
 #define MAX_STEERING_POWER 400
+
+#define VEHICLE_RADIUS 30.0f;
 
 Vehicle::~Vehicle()
 {
 	delete m_movementManager;
 	m_movementManager = nullptr;
+
+	delete m_obstacleData;
+	m_obstacleData = nullptr;
 }
 
 HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, carColour colour)
@@ -28,6 +33,9 @@ HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, carColour colour)
 	m_lastPosition = Vector2D(0, 0);
 
 	m_movementManager = new MovementManager(MAX_SPEED, MAX_STEERING_POWER);
+	m_obstacleData = new ObstacleData();
+	m_obstacleData->position = &m_currentPosition;
+	m_obstacleData->radius = VEHICLE_RADIUS;
 
 	return hr;
 }

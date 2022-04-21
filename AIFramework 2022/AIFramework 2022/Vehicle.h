@@ -10,6 +10,10 @@ enum class carColour
 	redCar,
 	blueCar,
 };
+struct ObstacleData {
+	Vector2D* position;
+	float radius;
+};
 
 class Vehicle : public DrawableGameObject, public Collidable
 {
@@ -28,6 +32,10 @@ public:
 	void setWaypointManager(WaypointManager* wpm);
 	void hasCollided() {}
 
+	ObstacleData* GetObstacleData() { return m_obstacleData; }
+
+	Vector2D* GetTargetPntr() { return &m_targetPos; }
+
 	void Reset();
 
 protected: // preotected properties
@@ -41,5 +49,7 @@ protected: // preotected properties
 	WaypointManager* m_waypointManager;
 
 	MovementManager* m_movementManager;
+
+	ObstacleData* m_obstacleData;
 };
 

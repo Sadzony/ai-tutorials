@@ -43,6 +43,12 @@
     <ClCompile Include="Pursue.cpp">
       <Filter>State Machine\Vehicle States</Filter>
     </ClCompile>
+    <ClCompile Include="ArriveAndAvoid.cpp">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClCompile>
+    <ClCompile Include="Navigation.cpp">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIManager.h" />
@@ -103,6 +109,12 @@
       <Filter>State Machine\Vehicle States</Filter>
     </ClInclude>
     <ClInclude Include="Pursue.h">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClInclude>
+    <ClInclude Include="ArriveAndAvoid.h">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClInclude>
+    <ClInclude Include="Navigation.h">
       <Filter>State Machine\Vehicle States</Filter>
     </ClInclude>
   </ItemGroup>

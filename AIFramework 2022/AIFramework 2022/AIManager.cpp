@@ -216,6 +216,13 @@ void AIManager::keyDown(WPARAM param)
             m_blueCarStateMachine->ChangeState(new ArriveToTarget(m_pCarBlue));
             break;
         }
+        case key_b:
+        {
+            //reset positions and states of blue car
+            m_pCarBlue->Reset();
+            m_blueCarStateMachine->ChangeState(new State());
+            break;
+        }
         case key_c:
         {
             Follow* followState = new Follow(m_pCarRed, m_pCarBlue);
@@ -231,6 +238,9 @@ void AIManager::keyDown(WPARAM param)
         case key_o: 
         {
             //obstacle avoidance
+            ArriveAndAvoid* avoidanceState = new ArriveAndAvoid(m_pCarBlue);
+            avoidanceState->AddObstacle(m_pCarRed->GetObstacleData());
+            m_blueCarStateMachine->ChangeState(avoidanceState);
             break;
         }
         case key_p:
@@ -241,9 +251,7 @@ void AIManager::keyDown(WPARAM param)
         }
         case key_r:
         {
-            //reset positions and states
-            m_pCarBlue->Reset();
-            m_blueCarStateMachine->ChangeState(new State());
+            //reset positions and states of red car
             m_pCarRed->Reset();
             m_redCarStateMachine->ChangeState(new State());
             break;
@@ -258,8 +266,12 @@ void AIManager::keyDown(WPARAM param)
             //traverse
             break;
         }
+        case key_w:
+        {
+            m_redCarStateMachine->ChangeState(new Wander(m_pCarRed));
+            break;
+        }
         case VK_SPACE:
-
             break;
         // etc
         default:

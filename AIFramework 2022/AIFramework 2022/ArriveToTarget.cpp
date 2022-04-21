@@ -7,7 +7,7 @@ void ArriveToTarget::Update(float t)
 	MovementManager* movement = m_agent->GetMovementManager();
 	float length = (target - curPos).Length();
 	if (length > 5) { //5 pixels of error allowed
-		movement->SeekWithArrive(m_agent->getTargetPos(), m_agent->getPosition());
+		movement->SeekWithArrive(target, curPos);
 		m_agent->setVehiclePosition(movement->ProcessMovementWithTrunc(t, curPos, length));
 	}
 	else {
