@@ -47,6 +47,8 @@ struct Vector2D
 	//returns the squared length of the vector (thereby avoiding the sqrt)
 	inline double    LengthSq()const;
 
+	inline double ManhattanLength()const;
+
 	inline void      Normalize();
 	inline Vector2D Normalized()const;
 
@@ -73,10 +75,15 @@ struct Vector2D
 
 	inline void      Reflect(const Vector2D& norm);
 
+
 	//returns the vector that is the reverse of this vector
 	inline Vector2D  GetReverse()const;
 
 	inline double GetRotation(const Vector2D& v2)const;
+
+
+	//returns vector as if projected onto v2
+	inline Vector2D Projection(const Vector2D& v2) const;
 
 	//we need some overloaded operators
 	const Vector2D& operator+=(const Vector2D& rhs)
@@ -134,7 +141,9 @@ struct Vector2D
 
 	bool operator!=(const Vector2D& rhs)const
 	{
-		return (x != rhs.x) || (y != rhs.y);
+		bool xBool = !isEqual(x, rhs.x);
+		bool yBool = !isEqual(y, rhs.y);
+		return (xBool ||  yBool);
 	}
 
 };
@@ -168,6 +177,11 @@ inline double Vector2D::Length()const
 inline double Vector2D::LengthSq()const
 {
 	return (x * x + y * y);
+}
+
+inline double Vector2D::ManhattanLength() const
+{
+	return abs(x) + abs(y);
 }
 
 
@@ -316,6 +330,12 @@ inline double Vector2D::GetRotation(const Vector2D& v2) const
 	rotation = std::clamp(rotation, -1.0, 1.0);
 	rotation = acos(rotation);
 	return rotation;
+}
+
+inline Vector2D Vector2D::Projection(const Vector2D& v2) const
+{
+	double dot = this->Dot(v2.Normalized());
+	return v2.Normalized() * dot;
 }
 
 //------------------------------------------------------------------------non member functions

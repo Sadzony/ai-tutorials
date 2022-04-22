@@ -235,6 +235,12 @@ void AIManager::keyDown(WPARAM param)
             m_blueCarStateMachine->ChangeState(fleeState);
             break;
         }
+        case key_n:
+        {
+            Navigation* navigationState = new Navigation(m_pCarBlue, &m_waypointManager);
+            m_blueCarStateMachine->ChangeState(navigationState);
+            break;
+        }
         case key_o: 
         {
             //obstacle avoidance

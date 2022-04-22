@@ -1,3 +1,4 @@
+
 #pragma once
 #include "DrawableGameObject.h"
 class Waypoint :
@@ -17,4 +18,3 @@ private:
     int  m_checkpointID;
     std::vector<Waypoint*> neighbours;
 };
-

@@ -7,7 +7,6 @@
 
 using namespace std;
 
-class Vehicle;
 class PickupItem;
 typedef vector<PickupItem*> vecPickups;
 

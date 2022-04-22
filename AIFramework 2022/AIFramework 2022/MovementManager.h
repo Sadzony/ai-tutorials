@@ -24,6 +24,7 @@ public:
 	//steering behaviours
 	void Seek(Vector2D targetPos, Vector2D currentPos);
 	void SeekWithArrive(Vector2D targetPos, Vector2D currentPos);
+	void SeekWithArriveAndMinSpeed(Vector2D targetPos, Vector2D currentPos, float minSpeed);
 	void Flee(Vector2D chaserPos, Vector2D currentPos);
 
 	Vector2D ReturnPosAfterStep(const float t, Vector2D currentPos);

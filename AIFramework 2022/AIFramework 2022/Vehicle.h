@@ -1,10 +1,12 @@
 #pragma once
 
 #include "DrawableGameObject.h"
-#include "WaypointManager.h"
 #include "Vector2D.h"
 #include "Collidable.h"
 #include "MovementManager.h"
+
+class WaypointManager;
+
 enum class carColour
 {
 	redCar,
@@ -51,5 +53,7 @@ protected: // preotected properties
 	MovementManager* m_movementManager;
 
 	ObstacleData* m_obstacleData;
+
+	float lerpTime = 0;
 };
 

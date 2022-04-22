@@ -1,7 +1,6 @@
-﻿  ArriveAndAvoid.cpp
+﻿  Navigation.cpp
 C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\State.h(10,28): warning C4100: 't': unreferenced formal parameter
-C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\ArriveAndAvoid.cpp(8,24): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\ArriveAndAvoid.cpp(20,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\ArriveAndAvoid.cpp(68,84): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\ArriveAndAvoid.cpp(68,61): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\Navigation.cpp(22,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\Navigation.cpp(35,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\Navigation.cpp(47,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   AIFramework.vcxproj -> C:\Users\szymo\Programming\AI\ai-tutorials\AIFramework 2022\AIFramework 2022\x64\Debug\AIFramework.exe

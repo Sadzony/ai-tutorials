@@ -48,6 +48,27 @@ void MovementManager::SeekWithArrive(Vector2D targetPos, Vector2D currentPos)
 	seekingForce.Truncate(m_steeringPower); //truncate to the acceleration power
 	AddForce(seekingForce);
 }
+void MovementManager::SeekWithArriveAndMinSpeed(Vector2D targetPos, Vector2D currentPos, float minSpeed)
+{
+	Vector2D direction = targetPos - currentPos;
+	if (direction.isZero()) {
+		return;
+	}
+	float distance = direction.Length();
+	if (distance < ARRIVAL_RADIUS) {
+		m_currentSpeed = m_maxSpeed * (distance / (ARRIVAL_RADIUS * ARRIVAL_MULTIPLIER)); //limits the speed depending on how close to the target we are. Arrival multiplier makes the slow stronger
+		if (m_currentSpeed < minSpeed) {
+			m_currentSpeed = minSpeed;
+		}
+	}
+	else {
+		m_currentSpeed = m_maxSpeed;
+	}
+	Vector2D seekingForce = direction.Normalized() * m_currentSpeed; //find the desired velocity
+	seekingForce -= velocity; //subtract current velocity to get closer to desired velocity
+	seekingForce.Truncate(m_steeringPower); //truncate to the acceleration power
+	AddForce(seekingForce);
+}
 void MovementManager::Flee(Vector2D chaserPos, Vector2D currentPos)
 {
 	m_currentSpeed = m_maxSpeed;
