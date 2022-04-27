@@ -380,6 +380,7 @@
     <ClCompile Include="Pursue.cpp" />
     <ClCompile Include="Seek.cpp" />
     <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="Strategy.cpp" />
     <ClCompile Include="Vehicle.cpp" />
     <ClCompile Include="Wander.cpp" />
     <ClCompile Include="Waypoint.cpp" />
@@ -410,6 +411,7 @@
     <ClInclude Include="State.h" />
     <ClInclude Include="StateList.h" />
     <ClInclude Include="StateManager.h" />
+    <ClInclude Include="Strategy.h" />
     <ClInclude Include="structures.h" />
     <ClInclude Include="Vector2D.h" />
     <ClInclude Include="Vehicle.h" />

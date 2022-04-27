@@ -49,6 +49,9 @@
     <ClCompile Include="Navigation.cpp">
       <Filter>State Machine\Vehicle States</Filter>
     </ClCompile>
+    <ClCompile Include="Strategy.cpp">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIManager.h" />
@@ -115,6 +118,9 @@
       <Filter>State Machine\Vehicle States</Filter>
     </ClInclude>
     <ClInclude Include="Navigation.h">
+      <Filter>State Machine\Vehicle States</Filter>
+    </ClInclude>
+    <ClInclude Include="Strategy.h">
       <Filter>State Machine\Vehicle States</Filter>
     </ClInclude>
   </ItemGroup>

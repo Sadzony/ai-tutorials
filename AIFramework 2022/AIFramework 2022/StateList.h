@@ -7,3 +7,4 @@
 #include "Seek.h"
 #include "Pursue.h"
 #include "Navigation.h"
+#include "Strategy.h"

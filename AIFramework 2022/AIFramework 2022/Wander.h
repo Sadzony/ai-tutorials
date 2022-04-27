@@ -4,7 +4,7 @@ class Wander :
     public State
 {
 public:
-    Wander(Vehicle* p_agent) { m_agent = p_agent; movement = m_agent->GetMovementManager(); }
+    Wander(Vehicle* p_agent) { m_agent = p_agent; movement = m_agent->GetMovementManager(); SetFlag(StateFlag::Wander);}
     virtual void EnterState() override;
     virtual void Update(float t) override;
     virtual void Cleanup() override;

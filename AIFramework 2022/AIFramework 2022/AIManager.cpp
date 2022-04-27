@@ -80,6 +80,11 @@ HRESULT AIManager::initialise(ID3D11Device* pd3dDevice)
     // (needs to be done after waypoint setup)
     setRandomPickupPosition(pPickupPassenger);
 
+    PickupItem* pPickupFuel = new PickupItem();
+    hr = pPickupFuel->initMesh(pd3dDevice, pickuptype::Fuel);
+    m_pickups.push_back(pPickupFuel);
+    setRandomPickupPosition(pPickupFuel);
+
     return hr;
 }
 
@@ -145,8 +150,9 @@ void AIManager::mouseUp(int x, int y)
 	Waypoint* wp = m_waypointManager.getNearestWaypoint(Vector2D(x, y));
 	if (wp == nullptr)
 		return;
-
-    m_pCarBlue->setTargetPos(wp->getPosition());
+    if (m_blueCarStateMachine->GetCurrentFlag() != StateFlag::Strategy) {
+        m_pCarBlue->setTargetPos(wp->getPosition());
+    }
     
 }
 
@@ -235,6 +241,13 @@ void AIManager::keyDown(WPARAM param)
             m_blueCarStateMachine->ChangeState(fleeState);
             break;
         }
+        case key_k:
+        {
+            Strategy* strategyState = new Strategy(m_pCarBlue, &m_waypointManager, &m_pickups);
+            m_pCarBlue->setTargetPos(m_pickups[0]->getPosition()); //begin looking for passenger
+            m_blueCarStateMachine->ChangeState(strategyState);
+            break;
+        }
         case key_n:
         {
             Navigation* navigationState = new Navigation(m_pCarBlue, &m_waypointManager);
@@ -267,11 +280,6 @@ void AIManager::keyDown(WPARAM param)
             m_blueCarStateMachine->ChangeState(new Seek(m_pCarBlue));
             break;
 		}
-        case key_t:
-		{
-            //traverse
-            break;
-        }
         case key_w:
         {
             m_redCarStateMachine->ChangeState(new Wander(m_pCarRed));
@@ -342,33 +350,41 @@ bool AIManager::checkForCollisions()
     // do the same for a pickup item
     // a pickup - !! NOTE it is only referring the first one in the list !!
     // to get the passenger, fuel or speedboost specifically you will need to iterate the pickups and test their type (getType()) - see the pickup class
-    XMVECTOR puPos;
-    XMVECTOR puScale;
-    XMMatrixDecompose(
-        &puScale,
-        &dummy,
-        &puPos,
-        XMLoadFloat4x4(m_pickups[0]->getTransform())
-    );
+    for (PickupItem* pickUp : m_pickups) {
+        XMVECTOR puPos;
+        XMVECTOR puScale;
+        XMMatrixDecompose(
+            &puScale,
+            &dummy,
+            &puPos,
+            XMLoadFloat4x4(pickUp->getTransform())
+        );
 
-    // bounding sphere for pickup item
-    XMStoreFloat3(&scale, puScale);
-    BoundingSphere boundingSpherePU;
-    XMStoreFloat3(&boundingSpherePU.Center, puPos);
-    boundingSpherePU.Radius = scale.x;
+        // bounding sphere for pickup item
+        XMStoreFloat3(&scale, puScale);
+        BoundingSphere boundingSpherePU;
+        XMStoreFloat3(&boundingSpherePU.Center, puPos);
+        boundingSpherePU.Radius = scale.x;
 
-	// THIS IS generally where you enter code to test each type of pickup
-    // does the car bounding sphere collide with the pickup bounding sphere?
-    if (boundingSphereCar.Intersects(boundingSpherePU))
-    {
-        OutputDebugStringA("A collision with pick up has occurred!\n");
-        m_pickups[0]->hasCollided();
-        setRandomPickupPosition(m_pickups[0]);
+        // THIS IS generally where you enter code to test each type of pickup
+        // does the car bounding sphere collide with the pickup bounding sphere?
+        if (boundingSphereCar.Intersects(boundingSpherePU))
+        {
+            OutputDebugStringA("A collision with pick up has occurred!\n");
+            pickUp->hasCollided();
+            setRandomPickupPosition(pickUp);
+            if (pickUp->getType() == pickuptype::Fuel) {
+                m_pCarBlue->RefillFuel();
+            }
+            if (m_blueCarStateMachine->GetCurrentFlag() == StateFlag::Strategy) 
+            {
+                m_pCarBlue->setTargetPos(m_pickups[0]->getPosition()); //whenever colliding with any pickup, set the new target position to passenger
+            }
+            // you will need to test the type of the pickup to decide on the behaviour
+            // m_pCarRed->dosomething(); ...
 
-        // you will need to test the type of the pickup to decide on the behaviour
-        // m_pCarRed->dosomething(); ...
-
-        return true;
+            return true;
+        }
     }
 
     return false;

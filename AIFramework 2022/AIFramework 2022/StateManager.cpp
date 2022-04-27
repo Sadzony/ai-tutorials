@@ -5,6 +5,7 @@ StateManager::StateManager(Vehicle* p_agent)
 	m_agent = p_agent;
 	m_currentState = new State();
 	m_previousState = new State();
+	currentFlag = m_currentState->GetFlag();
 }
 
 StateManager::~StateManager()
@@ -38,5 +39,6 @@ void StateManager::ChangeState(State* newState)
 		m_currentState = newState;
 		m_currentState->EnterState();
 	}
+	currentFlag = m_currentState->GetFlag();
 
 }

@@ -9,9 +9,12 @@ public:
 	void Update(float t);
 	void ChangeState(State* newState);
 
+	StateFlag GetCurrentFlag() { return currentFlag; }
+
 protected:
 	State* m_currentState;
 	State* m_previousState;
 	Vehicle* m_agent;
+	StateFlag currentFlag;
 };
 

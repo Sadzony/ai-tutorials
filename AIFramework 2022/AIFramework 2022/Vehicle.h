@@ -4,6 +4,7 @@
 #include "Vector2D.h"
 #include "Collidable.h"
 #include "MovementManager.h"
+#include "constants.h"
 
 class WaypointManager;
 
@@ -38,6 +39,9 @@ public:
 
 	Vector2D* GetTargetPntr() { return &m_targetPos; }
 
+	void RefillFuel() { fuel = MAX_FUEL; }
+	double GetCurrentFuel() { return fuel; }
+
 	void Reset();
 
 protected: // preotected properties
@@ -54,6 +58,6 @@ protected: // preotected properties
 
 	ObstacleData* m_obstacleData;
 
-	float lerpTime = 0;
+	double fuel = MAX_FUEL;
 };
 

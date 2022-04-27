@@ -51,6 +51,8 @@ public:
 	std::deque<Waypoint*> GeneratePathQueueDijkstra(Waypoint* startNode, Waypoint* targetNode);
 	std::deque<Waypoint*> GeneratePathQueueAStar(Waypoint* startNode, Waypoint* targetNode);
 
+	double FindPathDistance(std::deque<Waypoint*> pathToCheck);
+
 protected: // methods
 	bool	doWaypointsCrossBuilding(Waypoint* wp1, Waypoint* wp2);
 

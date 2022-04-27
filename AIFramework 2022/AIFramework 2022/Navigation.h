@@ -7,7 +7,7 @@ class Navigation :
 	public State
 {
 public:
-	Navigation(Vehicle* p_agent, WaypointManager* p_wpManager) : m_wpManager(p_wpManager), m_agent(p_agent) { lastTarget = Vector2D(0, 0); }
+	Navigation(Vehicle* p_agent, WaypointManager* p_wpManager) : m_wpManager(p_wpManager), m_agent(p_agent) { lastTarget = Vector2D(0, 0); SetFlag(StateFlag::Navigation); }
 	virtual void Update(float t) override;
 	virtual void Cleanup() override;
 protected:

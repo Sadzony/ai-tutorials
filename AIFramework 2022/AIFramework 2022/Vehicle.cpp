@@ -2,6 +2,8 @@
 
 #define MAX_SPEED 150
 
+#define LOW_FUEL_SPEED 50
+
 #define MAX_STEERING_POWER 400
 
 #define VEHICLE_RADIUS 30.0f;
@@ -42,10 +44,18 @@ HRESULT	Vehicle::initMesh(ID3D11Device* pd3dDevice, carColour colour)
 
 void Vehicle::update(const float deltaTime)
 {
-
+	if (fuel < 0) 
+	{
+		m_movementManager->setMaxSpeed(LOW_FUEL_SPEED);
+	}
+	else {
+		m_movementManager->setMaxSpeed(MAX_SPEED);
+	}
 	// rotate the object based on its last & current position
 	Vector2D diff = m_currentPosition - m_lastPosition;
-	if (diff.Length() > 0) { // if zero then don't update rotation
+	float distanceTravelledLastFrame = diff.Length();
+	if (distanceTravelledLastFrame > 0) { // if zero then don't update rotation
+		fuel -= distanceTravelledLastFrame;
 		diff.Normalize();
 		m_radianRotation = atan2f((float)diff.y, (float)diff.x); // this is used by DrawableGameObject to set the rotation
 	}
@@ -71,6 +81,7 @@ void Vehicle::setWaypointManager(WaypointManager* wpm)
 
 void Vehicle::Reset()
 {
+	fuel = MAX_FUEL;
 	m_movementManager->ZeroPhysics();
 	setVehiclePosition(Vector2D());
 	m_targetPos = Vector2D();

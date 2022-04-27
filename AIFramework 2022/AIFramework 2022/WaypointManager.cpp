@@ -364,6 +364,18 @@ std::deque<Waypoint*> WaypointManager::GeneratePathQueueAStar(Waypoint* startNod
 	}
 }
 
+double WaypointManager::FindPathDistance(std::deque<Waypoint*> pathToCheck)
+{
+	double distance = 0.0f;
+	while (!pathToCheck.empty() && pathToCheck.size() != 1)
+	{
+		double cost = (pathToCheck.at(1)->getPosition() - pathToCheck.front()->getPosition()).Length();
+		distance += cost;
+		pathToCheck.pop_front();
+	}
+	return distance;
+}
+
 vecWaypoints* WaypointManager::calculateNeighbouringWaypoints(Waypoint* waypoint)
 {
 	//gets the pointer to the neighbours vector stored in a waypoint. Recalculates the neighbours. returns the pointer

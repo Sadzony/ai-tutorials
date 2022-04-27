@@ -4,7 +4,7 @@ class Seek :
     public State
 {
 public:
-    Seek(Vehicle* p_agent) { m_agent = p_agent; }
+    Seek(Vehicle* p_agent) { m_agent = p_agent; SetFlag(StateFlag::Seek);}
     virtual void Update(float t) override;
     virtual void Cleanup() override;
 protected:
